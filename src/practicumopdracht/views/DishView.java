@@ -23,7 +23,6 @@ public class DishView extends View{
     private ListView<Dish> dishLv;
     private Parent root;
 
-
     @Override
     protected Parent initializeView() {
 

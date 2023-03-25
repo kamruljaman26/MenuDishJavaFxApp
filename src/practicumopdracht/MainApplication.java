@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import practicumopdracht.controllers.Controller;
+import practicumopdracht.controllers.DishController;
 import practicumopdracht.controllers.MenuController;
 import practicumopdracht.views.DishView;
 import practicumopdracht.views.MenuView;
@@ -31,7 +32,9 @@ public class MainApplication extends Application {
         stage.setHeight(HEIGHT);
         stage.show();
 
-        switchController(new MenuController());
+        Controller menuController = new DishController();
+        switchController(menuController);
+//        switchController(new DishController()); menu is master model
     }
 
     public static void switchController (Controller view) {

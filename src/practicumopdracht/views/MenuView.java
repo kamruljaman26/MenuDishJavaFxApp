@@ -18,8 +18,6 @@ public class MenuView extends View{
     private ListView<Menu> menuLv;
     private Parent root;
 
-    public MenuView() { initializeView(); }
-
     @Override
     protected Parent initializeView() {
 
@@ -72,6 +70,7 @@ public class MenuView extends View{
 
         // Set the root to be the grid pane and return it
         root = allBoxes;
+
         return root;
     }
 
