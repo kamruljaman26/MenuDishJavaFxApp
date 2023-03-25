@@ -2,6 +2,7 @@ package practicumopdracht.controllers;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import practicumopdracht.MainApplication;
 import practicumopdracht.views.DishView;
 import practicumopdracht.views.MenuView;
 import practicumopdracht.views.View;
@@ -29,7 +30,7 @@ public class DishController extends Controller{
         });
 
         view.getSwitchBt().setOnAction(event -> {
-            displayAlert("Terug naar overzicht");
+            MainApplication.switchController(new MenuController());
         });
     }
 
