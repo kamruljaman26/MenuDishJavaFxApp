@@ -9,6 +9,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import practicumopdracht.models.Menu;
 
+import java.time.LocalDate;
+
 public class MenuView extends View{
 
     private Label menuNameLb,releaseDateLb;

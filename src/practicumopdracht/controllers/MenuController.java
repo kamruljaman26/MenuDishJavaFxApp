@@ -1,19 +1,16 @@
 package practicumopdracht.controllers;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import practicumopdracht.MainApplication;
+import practicumopdracht.models.Menu;
 import practicumopdracht.views.MenuView;
 import practicumopdracht.views.View;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import practicumopdracht.views.MenuView;
-import practicumopdracht.views.View;
+
+import java.time.LocalDate;
 
 public class MenuController extends Controller {
 
@@ -24,27 +21,63 @@ public class MenuController extends Controller {
         initializeListeners();
     }
 
+    // handle button actions
     private void initializeListeners() {
+
+        // save button
         view.getOpslaanBt().setOnAction(event -> {
-            displayAlert("Opslaan");
+            if (validateInputFields()) {
+                TextField menuName = view.getMenuNameTf();
+                DatePicker releaseDate = view.getReleaseDateDp();
+
+                Menu menu = new Menu(menuName.getText(), releaseDate.getValue());
+                displayInfoAlert(menu.toString());
+            }
         });
 
         view.getNieuwBt().setOnAction(event -> {
-            displayAlert("Nieuw");
+            displayInfoAlert("Nieuw button was pressed!");
         });
 
         view.getVerwijderenBt().setOnAction(event -> {
-            displayAlert("Verwijderen");
+            displayInfoAlert("Verwijderen button was pressed!");
         });
 
+        // switch button
         view.getSwitchBt().setOnAction(event -> {
             MainApplication.switchController(new DishController());
         });
     }
 
-    private void displayAlert(String buttonName) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, buttonName + " button was pressed!", ButtonType.OK);
+    // show info alert
+    private void displayInfoAlert(String text) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, text, ButtonType.OK);
         alert.showAndWait();
+    }
+
+    // show error alert
+    private void displayErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    // validate inputs
+    private boolean validateInputFields() {
+        TextField menuName = view.getMenuNameTf();
+        DatePicker releaseDate = view.getReleaseDateDp();
+
+        if (menuName.getText().isEmpty() || menuName.getText().trim().isEmpty()) {
+            displayErrorAlert("Menu name is required");
+            return false;
+        }
+
+        if (releaseDate.getValue() == null || releaseDate.getValue().isBefore(LocalDate.now())) {
+            displayErrorAlert("Invalid release date");
+            return false;
+        }
+
+        return true;
     }
 
     @Override
