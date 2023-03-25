@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>784</x>
+      <y>154</y>
+      <w>140</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt; javafx.application&gt;&gt;
+Application</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>686</x>
+      <y>161</y>
+      <w>112</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>483</x>
+      <y>105</y>
+      <w>210</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>MainApplication
+--
+-TITLE: string
+-WIDTH: int
+-HEIGHT: int
+_-stage: Stage_
+-menuDAO: MenuDAO
+-dishDAO: DishDAO
+--
++start(stage: Stage): void
+_+switchController(controller: Controller): void_
++_getMenuDAO(): MenuDAO_
++_getDishDAO(): DishDAO_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>777</x>
+      <y>203</y>
+      <w>147</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>Main
+--
++main(args: String[]): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>686</x>
+      <y>210</y>
+      <w>105</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>791</x>
+      <y>280</y>
+      <w>147</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;views&gt;&gt;
+/View/
+--
+-root: Parent
+--
+/#initializeView(): Parent/
++getRoot(): Parent</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>616</x>
+      <y>301</y>
+      <w>189</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>250.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>707</x>
+      <y>378</y>
+      <w>147</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;views&gt;&gt;
+ArtiestView
+--
+#initializeView(): Parent</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>868</x>
+      <y>378</y>
+      <w>147</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;views&gt;&gt;
+AlbumView
+--
+#initializeView(): Parent</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>777</x>
+      <y>343</y>
+      <w>56</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>60.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>882</x>
+      <y>343</y>
+      <w>56</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>525</x>
+      <y>287</y>
+      <w>98</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;controllers&gt;&gt;
+/Controller/
+--
+/+getView(): View/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>567</x>
+      <y>238</y>
+      <w>21</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>455</x>
+      <y>364</y>
+      <w>98</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;controller&gt;&gt;
+MenuController
+--
+-view: MenuView
+--
++getView(): View</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>567</x>
+      <y>364</y>
+      <w>98</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;controllers&gt;&gt;
+DishController
+--
+-view: DishView
+--
++getView(): View</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>518</x>
+      <y>329</y>
+      <w>42</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>40.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>581</x>
+      <y>329</y>
+      <w>49</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>434</x>
+      <y>469</y>
+      <w>119</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;models&gt;&gt;
+Menu
+--
+-menuName: String
+-releaseDate: LocalDate</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>567</x>
+      <y>469</y>
+      <w>168</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;models&gt;&gt;
+Dish
+--
+-dishName: String
+-price: double
+-averageCookingTimeInMinutes: int
+-isVegan: boolean
+-belongsTo: Menu</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>483</x>
+      <y>420</y>
+      <w>21</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>616</x>
+      <y>420</y>
+      <w>21</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>105</x>
+      <y>175</y>
+      <w>147</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;data&gt;&gt;
+DAO&lt;T&gt;
+--
++getAll(): List&lt;T&gt;
++addOrUpdate(object: T): void
++remove(object: T): void
++save(): boolean
++load(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>245</x>
+      <y>196</y>
+      <w>252</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;340.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>175</x>
+      <y>308</y>
+      <w>231</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;data&gt;&gt;
+DishDAO
+--
+#dishes: List&lt;DishModel&gt;
+--
++getAllFor(object: MenuModel): List&lt;DishModel&gt;
++....
+/+load(): boolean/
+/+save(): boolean/
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>21</x>
+      <y>434</y>
+      <w>147</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;data&gt;&gt;
+DummyMenuDAO
+--
++load(): boolean
++save(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>196</x>
+      <y>434</y>
+      <w>147</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;data&gt;&gt;
+DummyDishDAO
+--
++load(): boolean
++save(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>21</x>
+      <y>308</y>
+      <w>147</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;data&gt;&gt;
+MenuDAO
+--
+#menus: List&lt;MenuModel&gt;
+--
++getById(id: int)
++....
+/+load(): boolean/
+/+save(): boolean/
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>189</x>
+      <y>259</y>
+      <w>91</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>84</x>
+      <y>259</y>
+      <w>84</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>91</x>
+      <y>399</y>
+      <w>21</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>259</x>
+      <y>399</y>
+      <w>21</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+</diagram>

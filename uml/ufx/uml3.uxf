@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>136</y>
+      <w>160</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt; javafx.application&gt;&gt;
+Application</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>488</x>
+      <y>144</y>
+      <w>128</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>256</x>
+      <y>136</y>
+      <w>240</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>MainApplication
+--
+-TITLE: string
+-WIDTH: int
+-HEIGHT: int
+_-stage: Stage_
+--
++start(stage: Stage): void
+_+switchController(controller: Controller): void_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>592</x>
+      <y>192</y>
+      <w>168</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Main
+--
++main(args: String[]): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>488</x>
+      <y>200</y>
+      <w>120</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>608</x>
+      <y>280</y>
+      <w>168</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;views&gt;&gt;
+/View/
+--
+-root: Parent
+--
+/#initializeView(): Parent/
++getRoot(): Parent</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>408</x>
+      <y>304</y>
+      <w>216</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>250.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>512</x>
+      <y>392</y>
+      <w>168</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;views&gt;&gt;
+MenuView
+--
+#initializeView(): Parent</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>696</x>
+      <y>392</y>
+      <w>168</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;views&gt;&gt;
+DishView
+--
+#initializeView(): Parent</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>592</x>
+      <y>352</y>
+      <w>64</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>60.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>712</x>
+      <y>352</y>
+      <w>64</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>304</x>
+      <y>288</y>
+      <w>112</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;controllers&gt;&gt;
+/Controller/
+--
+/+getView(): View/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>352</x>
+      <y>232</y>
+      <w>24</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>224</x>
+      <y>376</y>
+      <w>112</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;controller&gt;&gt;
+MenuController
+--
+-view: MenuView
+--
++getView(): View</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>352</x>
+      <y>376</y>
+      <w>112</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;controllers&gt;&gt;
+DishController
+--
+-view: DishView
+--
++getView(): View</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>296</x>
+      <y>336</y>
+      <w>48</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>40.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>368</x>
+      <y>336</y>
+      <w>56</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>200</x>
+      <y>496</y>
+      <w>128</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;models&gt;&gt;
+Menu
+--
+-menuName: String
+-releaseDate: LocalDate
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>352</x>
+      <y>496</y>
+      <w>184</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;models&gt;&gt;
+Dish
+--
+-dishName: String
+-price: double
+-averageCookingTimeInMinutes: int
+-isVegan: boolean
+-belongsTo: Menu</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>256</x>
+      <y>440</y>
+      <w>24</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>408</x>
+      <y>440</y>
+      <w>24</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
