@@ -16,6 +16,8 @@ public class DummyDishDAO extends DishDAO {
         DAO<Menu> menuDAO = new DummyMenuDAO();
         menuDAO.load();
 
+        dishes.add(new Dish("Sushi Platter", 18.5, 45, false, menuDAO.getById(0)));
+        dishes.add(new Dish("Spicy Noodles", 9.25, 15, true, menuDAO.getById(0)));
         dishes.add(new Dish("Spaghetti Bolognese", 12.5, 25, false, menuDAO.getById(1)));
         dishes.add(new Dish("Caesar Salad", 8.75, 15, true, menuDAO.getById(1)));
         dishes.add(new Dish("Beef Burger", 14.0, 20, false, menuDAO.getById(2)));

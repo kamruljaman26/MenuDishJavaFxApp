@@ -77,11 +77,10 @@ public class Dish {
     @Override
     public String toString() {
         return "Dish{" +
-                "dishName='" + dishName + '\'' +
+                "Name='" + dishName + '\'' +
                 ", price=" + price +
-                ", averageCookingTimeInMinutes=" + averageCookingTimeInMinutes +
+                ", CookingTimeInMinutes=" + averageCookingTimeInMinutes +
                 ", isVegan=" + isVegan +
-                ", belongsTo=" + belongsTo +
                 '}';
     }
 }

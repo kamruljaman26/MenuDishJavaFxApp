@@ -1,7 +1,9 @@
 package practicumopdracht.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.scene.control.*;
 import practicumopdracht.MainApplication;
+import practicumopdracht.data.MenuDAO;
 import practicumopdracht.models.Menu;
 import practicumopdracht.views.MenuView;
 import practicumopdracht.views.View;
@@ -13,37 +15,73 @@ import java.time.LocalDate;
 public class MenuController extends Controller {
 
     private MenuView view;
+    private MenuDAO menuDAO;
 
     public MenuController() {
         view = new MenuView();
         initializeListeners();
+
+        // init menu dao
+        menuDAO = MainApplication.getMenuDAO();
+        initializeListView();
+    }
+
+    //When starting the MasterController screen the ListView displays all the associated Master models by default.
+    // To do this, use data binding in conjunction with the associated DAO. Override the toString method of your
+    // models such that all data is visible in the ListViews
+    private void initializeListView() {
+        view.getMenuLv().setItems(FXCollections.observableList(menuDAO.getAll()));
     }
 
     // handle button actions
     private void initializeListeners() {
-
-        // save button
         view.getOpslaanBt().setOnAction(event -> {
             if (validateInputFields()) {
                 TextField menuName = view.getMenuNameTf();
                 DatePicker releaseDate = view.getReleaseDateDp();
 
                 Menu menu = new Menu(menuName.getText(), releaseDate.getValue());
+                menuDAO.addOrUpdate(menu);
+                initializeListView(); // refresh list view
                 displayInfoAlert(menu.toString());
             }
         });
 
+        // new button
         view.getNieuwBt().setOnAction(event -> {
             displayInfoAlert("Nieuw button was pressed!");
         });
 
+        // remove button
         view.getVerwijderenBt().setOnAction(event -> {
-            displayInfoAlert("Verwijderen button was pressed!");
+            Menu selectedMenu = view.getMenuLv().getSelectionModel().getSelectedItem();
+            if (selectedMenu != null) {
+                menuDAO.remove(selectedMenu);
+                initializeListView(); // refresh list view
+                displayInfoAlert("Menu removed: " + selectedMenu.toString());
+            } else {
+                displayErrorAlert("Selecteer een menu om te verwijderen");
+            }
         });
 
         // switch button
+        view.getSwitchBt().setDisable(true); // initially disable switch button
         view.getSwitchBt().setOnAction(event -> {
-            MainApplication.switchController(new DishController());
+            Menu selectedMenu = view.getMenuLv().getSelectionModel().getSelectedItem();
+            if (selectedMenu != null) {
+                MainApplication.switchController(new DishController(selectedMenu));
+            } else {
+                displayErrorAlert("Selecteer een menu om verder te gaan");
+            }
+        });
+
+        // enable switch button only when a menu is selected
+        view.getMenuLv().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                view.getSwitchBt().setDisable(false);
+            } else {
+                view.getSwitchBt().setDisable(true);
+            }
         });
     }
 
