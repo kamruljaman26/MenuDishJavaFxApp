@@ -30,7 +30,6 @@ public class DishController extends Controller {
                 TextField cookingTimeTf = view.getCookingTimeTf();
                 CheckBox veganCb = view.getVeganCb();
 
-                ///    public Dish(String dishName, double price, int averageCookingTimeInMinutes, boolean isVegan, Menu belongsTo) {
                 Dish menu = new Dish(dishTa.getText(),
                         Double.parseDouble(priceTf.getText()),
                         Integer.parseInt(cookingTimeTf.getText()),
@@ -110,7 +109,6 @@ public class DishController extends Controller {
             return false;
         }
     }
-
 
     @Override
     public View getView() {

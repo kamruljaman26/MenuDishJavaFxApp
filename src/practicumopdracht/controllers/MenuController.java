@@ -5,8 +5,6 @@ import practicumopdracht.MainApplication;
 import practicumopdracht.models.Menu;
 import practicumopdracht.views.MenuView;
 import practicumopdracht.views.View;
-
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
