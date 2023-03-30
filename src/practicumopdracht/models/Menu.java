@@ -1,9 +1,12 @@
 package practicumopdracht.models;
 
+import practicumopdracht.IO.Writeable;
+import practicumopdracht.exceptions.InvalidLineFormatException;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Menu {
+public class Menu implements Writeable<Menu> {
 
     private String menuName;
     private LocalDate releaseDate;
@@ -51,5 +54,24 @@ public class Menu {
                 "menuName='" + menuName + '\'' +
                 ", releaseDate=" + releaseDate +
                 " } ";
+    }
+
+
+    @Override
+    public String toWrite() {
+        return String.format("%s|%s", menuName, releaseDate);
+    }
+
+    @Override
+    public Menu toRead(String toRead) throws InvalidLineFormatException {
+        try {
+            String[] tokens = toRead.split("\\|");
+            Menu menu = new Menu();
+            menu.setMenuName(tokens[0]);
+            menu.setReleaseDate(LocalDate.parse(tokens[1]));
+            return menu;
+        } catch (Exception e) {
+            throw new InvalidLineFormatException();
+        }
     }
 }

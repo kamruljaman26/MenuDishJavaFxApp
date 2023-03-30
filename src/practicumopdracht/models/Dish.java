@@ -1,8 +1,11 @@
 package practicumopdracht.models;
 
+import practicumopdracht.IO.Writeable;
+import practicumopdracht.exceptions.InvalidLineFormatException;
+
 import java.util.Objects;
 
-public class Dish {
+public class Dish implements Writeable<Dish> {
 
     private String dishName;
     private double price;
@@ -82,5 +85,31 @@ public class Dish {
                 ", CookingTimeInMinutes=" + averageCookingTimeInMinutes +
                 ", isVegan=" + isVegan +
                 '}';
+    }
+
+    @Override
+    public String toWrite() {
+        return String.format("%s|%s|%s|%s|%s", dishName, price, averageCookingTimeInMinutes, isVegan, belongsTo.getMenuName());
+    }
+
+    @Override
+    public Dish toRead(String toRead) throws InvalidLineFormatException {
+        try {
+            String[] parts = toRead.split("\\|");
+
+            Dish dish = new Dish();
+            dish.setDishName(parts[0]);
+            dish.setPrice(Double.parseDouble(parts[1]));
+            dish.setAverageCookingTimeInMinutes(Integer.parseInt(parts[2]));
+            dish.setVegan(Boolean.parseBoolean(parts[3]));
+
+            Menu menu = new Menu();
+            menu.setMenuName(parts[4]);
+            dish.setBelongsTo(menu);
+
+            return dish;
+        } catch (Exception e) {
+            throw new InvalidLineFormatException();
+        }
     }
 }

@@ -30,6 +30,11 @@ public abstract class MenuDAO implements DAO<Menu> {
         }
     }
 
+    // todo test
+    public int getIdFor(Menu menu){
+        return menus.indexOf(menu);
+    }
+
     @Override
     public void remove(Menu object) {
         menus.remove(object);
