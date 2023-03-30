@@ -139,6 +139,12 @@ public class DishController extends Controller {
         view.getCookingTimeTf().clear(); // clear cooking time field
         view.getVeganCb().setSelected(false); // clear vegan checkbox
         toSave = true; // for handle update operation
+
+        // clear filed colors
+        view.getMenuSoort().setStyle("-fx-border-color: none ;");
+        view.getDishTa().setStyle("-fx-border-color: none ;");
+        view.getPriceTf().setStyle("-fx-border-color: none ;");
+        view.getCookingTimeTf().setStyle("-fx-border-color: none ;");
     }
 
     // show alert
@@ -157,18 +163,30 @@ public class DishController extends Controller {
 
         if (menuCb.getValue() == null) {
             stringBuilder.append("Please select a menu\n");
+            view.getMenuSoort().setStyle("-fx-border-color: red ;");
+        } else {
+            view.getMenuSoort().setStyle("-fx-border-color: none ;");
         }
 
         if (dishTa.getText().isEmpty() || dishTa.getText().trim().isEmpty()) {
             stringBuilder.append("Dish name is required\n");
+            view.getDishTa().setStyle("-fx-border-color: red ;");
+        } else {
+            view.getDishTa().setStyle("-fx-border-color: none ;");
         }
 
         if (priceTf.getText().isEmpty() || !isDouble(priceTf.getText())) {
             stringBuilder.append("Price must be a valid number\n");
+            view.getPriceTf().setStyle("-fx-border-color: red ;");
+        } else {
+            view.getPriceTf().setStyle("-fx-border-color: none ;");
         }
 
         if (cookingTimeTf.getText().isEmpty() || !isInteger(cookingTimeTf.getText())) {
             stringBuilder.append("Cooking time must be a valid integer\n");
+            view.getCookingTimeTf().setStyle("-fx-border-color: red ;");
+        } else {
+            view.getCookingTimeTf().setStyle("-fx-border-color: none ;");
         }
 
         return stringBuilder.toString();

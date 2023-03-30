@@ -94,6 +94,10 @@ public class MenuController extends Controller {
     private void cleanFields() {
         view.getMenuNameTf().clear();
         view.getReleaseDateDp().setValue(LocalDate.now());
+
+        //clear border color
+        view.getMenuNameTf().setStyle("-fx-border-color: none ;");
+        view.getReleaseDateDp().setStyle("-fx-border-color: none ;");
     }
 
     // show alert
@@ -111,10 +115,16 @@ public class MenuController extends Controller {
 
         if (menuName.getText().isEmpty() || menuName.getText().trim().isEmpty()) {
             stringBuilder.append("Menu name is required\n");
+            view.getMenuNameTf().setStyle("-fx-border-color: red ;");
+        } else {
+            view.getMenuNameTf().setStyle("-fx-border-color: none ;");
         }
 
         if (releaseDate.getValue() == null || releaseDate.getValue().isBefore(LocalDate.now())) {
             stringBuilder.append("Invalid release date\n");
+            view.getReleaseDateDp().setStyle("-fx-border-color: red ;");
+        } else {
+            view.getReleaseDateDp().setStyle("-fx-border-color: none ;");
         }
 
         return stringBuilder.toString();
