@@ -30,7 +30,88 @@ public class DishController extends Controller {
         initializeListeners();
         initializeComboBox();
         initializeListView();
+        initializeMenuItemListeners();
     }
+
+    private void initializeMenuItemListeners() {
+        // exit menu item handler
+        view.getExitItem().setOnAction(actionEvent -> {
+            Alert saveAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            saveAlert.setTitle("Exit");
+            saveAlert.setHeaderText("Do you want to save before exiting?");
+            ButtonType saveButtonType = new ButtonType("Yes");
+            ButtonType exitButtonType = new ButtonType("No");
+            saveAlert.getButtonTypes().setAll(saveButtonType, exitButtonType);
+
+            Optional<ButtonType> result = saveAlert.showAndWait();
+            if (result.get() == saveButtonType) {
+                // save before exiting
+                menuDAO.save();
+                dishDAO.save();
+                System.exit(0);
+            } else if (result.get() == exitButtonType) {
+                // exit without saving
+                System.exit(0);
+            }
+        });
+
+        // save menu item handler
+        view.getSaveItem().setOnAction(actionEvent -> {
+            // ask user for permission before saving
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Are you sure you want to save changes?", ButtonType.YES, ButtonType.NO);
+            confirmation.setTitle("Save confirmation");
+            confirmation.setHeaderText(null);
+            Optional<ButtonType> result = confirmation.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.YES) {
+                // save data
+                boolean menuSaved = menuDAO.save();
+                boolean dishSaved = dishDAO.save();
+
+                // display result of save operation to user
+                Alert saveResult = new Alert(Alert.AlertType.INFORMATION);
+                saveResult.setTitle("Save result");
+                saveResult.setHeaderText(null);
+
+                if (menuSaved && dishSaved) {
+                    saveResult.setContentText("Data saved successfully!");
+                } else {
+                    saveResult.setContentText("An error occurred while saving data.");
+                }
+
+                saveResult.showAndWait();
+            }
+        });
+
+
+        // load menu item handler
+        view.getLoadItem().setOnAction(actionEvent -> {
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to load data?");
+            Optional<ButtonType> result = confirm.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    // load data from file
+                    boolean loadSuccessful = menuDAO.load() && dishDAO.load();
+                    if (loadSuccessful) {
+                        // update ListView with loaded data
+                        initializeListView();
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Data loaded successfully!");
+                        alert.showAndWait();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to load data.");
+                        alert.showAndWait();
+                    }
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred while loading data.");
+                    alert.showAndWait();
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 
     // setup combo box
     private void initializeComboBox() {
@@ -79,19 +160,13 @@ public class DishController extends Controller {
                         selectedMenu
                 );
 
-//                // if a model is selected in the ListView, update the selected model with the new data
-//                Dish selectedDish = view.getDishLv().getSelectionModel().getSelectedItem();
-//                selectedDish.setDishName(dish.getDishName());
-//                selectedDish.setPrice(dish.getPrice());
-//                selectedDish.setAverageCookingTimeInMinutes(dish.getAverageCookingTimeInMinutes());
-//                selectedDish.setVegan(dish.isVegan());
 
-                initializeListView(); // update list
                 clearFields();
                 displayAlert("Saved Successfully!", String.format("Details\nName: %s\nPrice: %.2f\nCookingTime: %d Min\nIs Vegan: %b",
                                 dish.getDishName(), dish.getPrice(), dish.getAverageCookingTimeInMinutes(), dish.isVegan()),
                         Alert.AlertType.INFORMATION);
                 dishDAO.addOrUpdate(dish);
+                initializeListView(); // update list
 
             } else {
                 displayAlert("Please fix following errors to add dish", errors, Alert.AlertType.ERROR);
