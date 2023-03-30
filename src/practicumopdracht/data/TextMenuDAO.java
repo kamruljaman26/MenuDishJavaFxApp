@@ -31,7 +31,7 @@ public class TextMenuDAO extends MenuDAO {
             menus.addAll(textIO.readFromFile(FILENAME, new Menu()));
             return true;
         } catch (IOException | InvalidLineFormatException e) {
-            e.printStackTrace();
+            System.err.println("File "+FILENAME+" not found, while loading Menus!");
             return false;
         }
     }

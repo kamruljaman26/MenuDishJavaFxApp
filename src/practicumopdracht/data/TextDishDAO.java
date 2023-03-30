@@ -30,7 +30,7 @@ public class TextDishDAO extends DishDAO {
             dishes.addAll(textIO.readFromFile(FILENAME, new Dish()));
             return true;
         } catch (IOException | InvalidLineFormatException e) {
-            e.printStackTrace();
+            System.err.println("File "+FILENAME+" not found, while loading Dishes!");
             return false;
         }
     }

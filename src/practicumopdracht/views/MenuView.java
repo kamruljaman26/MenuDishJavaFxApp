@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -11,14 +12,16 @@ import practicumopdracht.models.Menu;
 
 import java.time.LocalDate;
 
-public class MenuView extends View{
+public class MenuView extends View {
 
-    private Label menuNameLb,releaseDateLb;
+    private Label menuNameLb, releaseDateLb;
     private TextField menuNameTf;
     private DatePicker releaseDateDp;
     private Button opslaanBt, nieuwBt, verwijderenBt, switchBt;
     private ListView<Menu> menuLv;
     private Parent root;
+    private MenuItem loadItem, saveItem, exitItem;
+
 
     @Override
     protected Parent initializeView() {
@@ -61,17 +64,30 @@ public class MenuView extends View{
         buttonDetails.setSpacing(10);
         buttonDetails.setAlignment(Pos.CENTER);
 
+        // create menubar and items
+        MenuBar menuBar = new MenuBar();
+        javafx.scene.control.Menu fileMenu = new javafx.scene.control.Menu("Bestand");
+        loadItem = new MenuItem("Laden");
+        saveItem = new MenuItem("Opslaan");
+        exitItem = new MenuItem("Afsluiten");
+        fileMenu.getItems().addAll(loadItem, saveItem, new SeparatorMenuItem(), exitItem);
+        menuBar.getMenus().addAll(fileMenu);
+
         // Add all child nodes into VBox 'all'
-        VBox all = new VBox(menuNameDetails, releaseDetails, opslaanDetails, menuLvDetails, buttonDetails);
+        VBox all = new VBox(menuNameDetails, releaseDetails, opslaanDetails, menuLvDetails);
+        all.setPadding(new Insets(10, 10, 10, 10));
         all.setSpacing(10);
 
-        // Set up the grid pane and add 'all' node into it
-        GridPane allBoxes = new GridPane();
-        allBoxes.setPadding(new Insets(10, 10, 10, 10));
-        allBoxes.add(all,0,0);
+
+        // creating border pane
+        BorderPane borderPane = new BorderPane();
+        borderPane.setPadding(new Insets(10, 10, 10, 10));
+        borderPane.setTop(menuBar);
+        borderPane.setCenter(all);
+        borderPane.setBottom(buttonDetails);
 
         // Set the root to be the grid pane and return it
-        root = allBoxes;
+        root = borderPane;
 
         return root;
     }
@@ -102,5 +118,29 @@ public class MenuView extends View{
 
     public ListView<Menu> getMenuLv() {
         return menuLv;
+    }
+
+    public MenuItem getLoadItem() {
+        return loadItem;
+    }
+
+    public void setLoadItem(MenuItem loadItem) {
+        this.loadItem = loadItem;
+    }
+
+    public MenuItem getSaveItem() {
+        return saveItem;
+    }
+
+    public void setSaveItem(MenuItem saveItem) {
+        this.saveItem = saveItem;
+    }
+
+    public MenuItem getExitItem() {
+        return exitItem;
+    }
+
+    public void setExitItem(MenuItem exitItem) {
+        this.exitItem = exitItem;
     }
 }

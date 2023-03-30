@@ -5,10 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import practicumopdracht.controllers.Controller;
 import practicumopdracht.controllers.MenuController;
-import practicumopdracht.data.DishDAO;
-import practicumopdracht.data.DummyDishDAO;
-import practicumopdracht.data.DummyMenuDAO;
-import practicumopdracht.data.MenuDAO;
+import practicumopdracht.data.*;
 
 
 public class MainApplication extends Application {
@@ -36,9 +33,9 @@ public class MainApplication extends Application {
         stage.show();
 
         // init Dummy DOAs
-        menuDAO = new DummyMenuDAO();
+        menuDAO = new TextMenuDAO();
         menuDAO.load();
-        dishDAO = new DummyDishDAO();
+        dishDAO = new TextDishDAO();
         dishDAO.load();
 
         switchController(new MenuController());
