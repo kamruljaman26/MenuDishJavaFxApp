@@ -46,7 +46,8 @@ public class MenuController extends Controller {
                 Menu menu = new Menu(menuName.getText(), releaseDate.getValue());
                 menuDAO.addOrUpdate(menu);
                 initializeListView(); // refresh list view
-                displayAlert(menu.toString(), Alert.AlertType.CONFIRMATION);
+                displayAlert(String.format("Details\nName: %s\nDate: %s", menu.getMenuName(), menu.getReleaseDate()), Alert.AlertType.CONFIRMATION);
+                cleanFields();
             } else {
                 displayAlert(errors, Alert.AlertType.ERROR);
             }
@@ -54,8 +55,7 @@ public class MenuController extends Controller {
 
         // new button
         view.getNieuwBt().setOnAction(event -> {
-            view.getMenuNameTf().clear();
-            view.getReleaseDateDp().setValue(LocalDate.now());
+            cleanFields();
         });
 
         // remove button
@@ -91,7 +91,12 @@ public class MenuController extends Controller {
         });
     }
 
-    // show info alert
+    private void cleanFields() {
+        view.getMenuNameTf().clear();
+        view.getReleaseDateDp().setValue(LocalDate.now());
+    }
+
+    // show alert
     private void displayAlert(String text, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType, text, ButtonType.OK);
         alert.showAndWait();

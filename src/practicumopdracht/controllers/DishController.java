@@ -9,6 +9,7 @@ import practicumopdracht.models.Dish;
 import practicumopdracht.models.Menu;
 import practicumopdracht.views.DishView;
 import practicumopdracht.views.View;
+
 import java.util.Optional;
 
 public class DishController extends Controller {
@@ -67,7 +68,8 @@ public class DishController extends Controller {
         // save/update button
         view.getOpslaanBt().setOnAction(event -> {
             // validate fields
-            if (validateInputFields()) {
+            String errors = validateInputFields();
+            if (errors.isEmpty()) {
 
                 // init dish with values form files
                 Dish dish = new Dish(view.getDishTa().getText(),
@@ -77,30 +79,28 @@ public class DishController extends Controller {
                         selectedMenu
                 );
 
-                if (!toSave && view.getDishLv().getSelectionModel().getSelectedItem() != null) {
-                    // if a model is selected in the ListView, update the selected model with the new data
-                    Dish selectedDish = view.getDishLv().getSelectionModel().getSelectedItem();
-                    selectedDish.setDishName(dish.getDishName());
-                    selectedDish.setPrice(dish.getPrice());
-                    selectedDish.setAverageCookingTimeInMinutes(dish.getAverageCookingTimeInMinutes());
-                    selectedDish.setVegan(dish.isVegan());
+//                // if a model is selected in the ListView, update the selected model with the new data
+//                Dish selectedDish = view.getDishLv().getSelectionModel().getSelectedItem();
+//                selectedDish.setDishName(dish.getDishName());
+//                selectedDish.setPrice(dish.getPrice());
+//                selectedDish.setAverageCookingTimeInMinutes(dish.getAverageCookingTimeInMinutes());
+//                selectedDish.setVegan(dish.isVegan());
 
-                    initializeListView(); // update
-                } else {
-                    dishDAO.addOrUpdate(dish);
-                    initializeListView();
-                }
+                initializeListView(); // update list
+                clearFields();
+                displayAlert("Saved Successfully!", String.format("Details\nName: %s\nPrice: %.2f\nCookingTime: %d Min\nIs Vegan: %b",
+                                dish.getDishName(), dish.getPrice(), dish.getAverageCookingTimeInMinutes(), dish.isVegan()),
+                        Alert.AlertType.INFORMATION);
+                dishDAO.addOrUpdate(dish);
+
+            } else {
+                displayAlert("Please fix following errors to add dish", errors, Alert.AlertType.ERROR);
             }
         });
 
         // new button
         view.getNieuwBt().setOnAction(event -> {
-            view.getDishLv().getSelectionModel().clearSelection(); // reset selection
-            view.getDishTa().clear(); // clear dish name field
-            view.getPriceTf().clear(); // clear price field
-            view.getCookingTimeTf().clear(); // clear cooking time field
-            view.getVeganCb().setSelected(false); // clear vegan checkbox
-            toSave = true; // for handle update operation
+            clearFields();
         });
 
         // remove button
@@ -132,46 +132,46 @@ public class DishController extends Controller {
         });
     }
 
-    // show info alert
-    private void displayInfoAlert(String text) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, text, ButtonType.OK);
-        alert.showAndWait();
+    private void clearFields() {
+        view.getDishLv().getSelectionModel().clearSelection(); // reset selection
+        view.getDishTa().clear(); // clear dish name field
+        view.getPriceTf().clear(); // clear price field
+        view.getCookingTimeTf().clear(); // clear cooking time field
+        view.getVeganCb().setSelected(false); // clear vegan checkbox
+        toSave = true; // for handle update operation
     }
 
-    // show error alert
-    private void displayErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(message);
+    // show alert
+    private void displayAlert(String title, String text, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType, text, ButtonType.OK);
+        alert.setTitle(title);
         alert.showAndWait();
     }
 
     // validate inputs
-    private boolean validateInputFields() {
+    private String validateInputFields() {
         TextArea dishTa = view.getDishTa();
         TextField priceTf = view.getPriceTf();
         TextField cookingTimeTf = view.getCookingTimeTf();
+        StringBuilder stringBuilder = new StringBuilder();
 
         if (menuCb.getValue() == null) {
-            displayErrorAlert("Please select a menu");
-            return false;
+            stringBuilder.append("Please select a menu\n");
         }
 
         if (dishTa.getText().isEmpty() || dishTa.getText().trim().isEmpty()) {
-            displayErrorAlert("Dish name is required");
-            return false;
+            stringBuilder.append("Dish name is required\n");
         }
 
         if (priceTf.getText().isEmpty() || !isDouble(priceTf.getText())) {
-            displayErrorAlert("Price must be a valid number");
-            return false;
+            stringBuilder.append("Price must be a valid number\n");
         }
 
         if (cookingTimeTf.getText().isEmpty() || !isInteger(cookingTimeTf.getText())) {
-            displayErrorAlert("Cooking time must be a valid integer");
-            return false;
+            stringBuilder.append("Cooking time must be a valid integer\n");
         }
 
-        return true;
+        return stringBuilder.toString();
     }
 
     private boolean isDouble(String str) {
