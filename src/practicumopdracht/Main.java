@@ -8,9 +8,7 @@ public class Main {
     public static String studentNaam = "Ömer Uyar";
     public static String studentNummer = "500754836";
     private static boolean jaIkAccepteer = true;
-
     public static boolean launchedFromMain;
-
     public static void main(String[] args) {
         launchedFromMain = true;
 

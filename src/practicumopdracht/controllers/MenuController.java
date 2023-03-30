@@ -19,6 +19,7 @@ public class MenuController extends Controller {
 
     public MenuController() {
         view = new MenuView();
+        view.getReleaseDateDp().setValue(LocalDate.now());
         initializeListeners();
 
         // init menu dao
@@ -26,7 +27,7 @@ public class MenuController extends Controller {
         initializeListView();
     }
 
-    //When starting the MasterController screen the ListView displays all the associated Master models by default.
+    // When starting the MasterController screen the ListView displays all the associated Master models by default.
     // To do this, use data binding in conjunction with the associated DAO. Override the toString method of your
     // models such that all data is visible in the ListViews
     private void initializeListView() {
@@ -35,21 +36,26 @@ public class MenuController extends Controller {
 
     // handle button actions
     private void initializeListeners() {
+        // week 5
         view.getOpslaanBt().setOnAction(event -> {
-            if (validateInputFields()) {
+            String errors = validateInputFields();
+            if (errors.isEmpty()) {
                 TextField menuName = view.getMenuNameTf();
                 DatePicker releaseDate = view.getReleaseDateDp();
 
                 Menu menu = new Menu(menuName.getText(), releaseDate.getValue());
                 menuDAO.addOrUpdate(menu);
                 initializeListView(); // refresh list view
-                displayInfoAlert(menu.toString());
+                displayAlert(menu.toString(), Alert.AlertType.CONFIRMATION);
+            } else {
+                displayAlert(errors, Alert.AlertType.ERROR);
             }
         });
 
         // new button
         view.getNieuwBt().setOnAction(event -> {
-            displayInfoAlert("Nieuw button was pressed!");
+            view.getMenuNameTf().clear();
+            view.getReleaseDateDp().setValue(LocalDate.now());
         });
 
         // remove button
@@ -58,9 +64,9 @@ public class MenuController extends Controller {
             if (selectedMenu != null) {
                 menuDAO.remove(selectedMenu);
                 initializeListView(); // refresh list view
-                displayInfoAlert("Menu removed: " + selectedMenu.toString());
+                displayAlert("Menu removed: " + selectedMenu.toString(), Alert.AlertType.INFORMATION);
             } else {
-                displayErrorAlert("Selecteer een menu om te verwijderen");
+                displayAlert("Selecteer een menu om te verwijderen", Alert.AlertType.ERROR);
             }
         });
 
@@ -71,7 +77,7 @@ public class MenuController extends Controller {
             if (selectedMenu != null) {
                 MainApplication.switchController(new DishController(selectedMenu));
             } else {
-                displayErrorAlert("Selecteer een menu om verder te gaan");
+                displayAlert("Selecteer een menu om verder te gaan", Alert.AlertType.ERROR);
             }
         });
 
@@ -86,34 +92,27 @@ public class MenuController extends Controller {
     }
 
     // show info alert
-    private void displayInfoAlert(String text) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, text, ButtonType.OK);
+    private void displayAlert(String text, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType, text, ButtonType.OK);
         alert.showAndWait();
     }
 
-    // show error alert
-    private void displayErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 
-    // validate inputs
-    private boolean validateInputFields() {
+    // validate inputs and return all error at ones = week5
+    private String validateInputFields() {
         TextField menuName = view.getMenuNameTf();
         DatePicker releaseDate = view.getReleaseDateDp();
+        StringBuilder stringBuilder = new StringBuilder();
 
         if (menuName.getText().isEmpty() || menuName.getText().trim().isEmpty()) {
-            displayErrorAlert("Menu name is required");
-            return false;
+            stringBuilder.append("Menu name is required\n");
         }
 
         if (releaseDate.getValue() == null || releaseDate.getValue().isBefore(LocalDate.now())) {
-            displayErrorAlert("Invalid release date");
-            return false;
+            stringBuilder.append("Invalid release date\n");
         }
 
-        return true;
+        return stringBuilder.toString();
     }
 
     @Override
