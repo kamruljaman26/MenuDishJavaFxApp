@@ -1,5 +1,7 @@
 package practicumopdracht.data;
 
+import practicumopdracht.models.Menu;
+
 import java.util.List;
 
 public interface DAO<T> {
@@ -10,6 +12,10 @@ public interface DAO<T> {
     List<T> getAll();
     //adds a new object to the data source or updates an existing one.
     void addOrUpdate(T object);
+
+    // return id based on name
+    int getIdFor(T object);
+
     // removes an object from the data source.
     void remove(T object);
     boolean save();

@@ -27,11 +27,15 @@ public abstract class MenuDAO implements DAO<Menu> {
     public void addOrUpdate(Menu object) {
         if (!menus.contains(object)) {
             menus.add(object);
+        } else {
+            int idFor = getIdFor(object);
+            menus.get(idFor).setMenuName(object.getMenuName());
+            menus.get(idFor).setReleaseDate(object.getReleaseDate());
         }
     }
 
-    // todo test
-    public int getIdFor(Menu menu){
+    @Override
+    public int getIdFor(Menu menu) {
         return menus.indexOf(menu);
     }
 

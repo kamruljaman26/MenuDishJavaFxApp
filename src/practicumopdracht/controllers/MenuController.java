@@ -20,6 +20,9 @@ public class MenuController extends Controller {
     private MenuDAO menuDAO;
     private DishDAO dishDAO;
 
+    private boolean toSave = true;
+    private Menu selectedMenu = null;
+
     public MenuController() {
         view = new MenuView();
         view.getReleaseDateDp().setValue(LocalDate.now());
@@ -121,17 +124,29 @@ public class MenuController extends Controller {
 
     // handle button actions
     private void initializeListeners() {
-        // week 5
+        // save button
         view.getOpslaanBt().setOnAction(event -> {
             String errors = validateInputFields();
             if (errors.isEmpty()) {
+
                 TextField menuName = view.getMenuNameTf();
                 DatePicker releaseDate = view.getReleaseDateDp();
 
-                Menu menu = new Menu(menuName.getText(), releaseDate.getValue());
-                menuDAO.addOrUpdate(menu);
-                initializeListView(); // refresh list view
-                displayAlert(String.format("Details\nName: %s\nDate: %s", menu.getMenuName(), menu.getReleaseDate()), Alert.AlertType.CONFIRMATION);
+                if(toSave) {
+                    Menu menu = new Menu(menuName.getText(), releaseDate.getValue());
+                    menuDAO.addOrUpdate(menu);
+                    initializeListView(); // refresh list view
+                    displayAlert(String.format("Details\nName: %s\nDate: %s", menu.getMenuName(), menu.getReleaseDate()), Alert.AlertType.CONFIRMATION);
+                }else {
+                    int id = menuDAO.getIdFor(selectedMenu);
+                    Menu menu = menuDAO.getById(id);
+                    menu.setMenuName(menuName.getText());
+                    menu.setReleaseDate(releaseDate.getValue());
+
+                    initializeListView(); // refresh list view
+                    displayAlert(String.format("Details\nName: %s\nDate: %s", menu.getMenuName(), menu.getReleaseDate()), Alert.AlertType.CONFIRMATION);
+                }
+
                 cleanFields();
             } else {
                 displayAlert(errors, Alert.AlertType.ERROR);
@@ -169,7 +184,12 @@ public class MenuController extends Controller {
         // enable switch button only when a menu is selected
         view.getMenuLv().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
+                view.getMenuNameTf().setText(newValue.getMenuName());
+                view.getReleaseDateDp().setValue(newValue.getReleaseDate());
+
                 view.getSwitchBt().setDisable(false);
+                toSave = false;
+                selectedMenu = newValue;
             } else {
                 view.getSwitchBt().setDisable(true);
             }
@@ -177,6 +197,8 @@ public class MenuController extends Controller {
     }
 
     private void cleanFields() {
+        toSave = true;
+
         view.getMenuNameTf().clear();
         view.getReleaseDateDp().setValue(LocalDate.now());
 

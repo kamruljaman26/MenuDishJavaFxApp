@@ -19,7 +19,9 @@ public class DishController extends Controller {
     private ComboBox<Menu> menuCb;
     private DishDAO dishDAO;
     private MenuDAO menuDAO;
-    private boolean toSave = false;
+
+    private boolean toSave = true;
+    private Dish selectedDish = null;
 
     public DishController(Menu menu) {
         dishDAO = MainApplication.getDishDAO();
@@ -138,6 +140,7 @@ public class DishController extends Controller {
                 view.getCookingTimeTf().setText(Integer.toString(newValue.getAverageCookingTimeInMinutes()));
                 view.getVeganCb().setSelected(newValue.isVegan());
 
+                selectedDish = newValue;
                 toSave = false;
             }
         });
@@ -151,22 +154,36 @@ public class DishController extends Controller {
             // validate fields
             String errors = validateInputFields();
             if (errors.isEmpty()) {
+                if (toSave) {
+                    // init dish with values form files
+                    Dish dish = new Dish(view.getDishTa().getText(),
+                            Double.parseDouble(view.getPriceTf().getText()),
+                            Integer.parseInt(view.getCookingTimeTf().getText()),
+                            view.getVeganCb().isSelected(),
+                            selectedMenu
+                    );
 
-                // init dish with values form files
-                Dish dish = new Dish(view.getDishTa().getText(),
-                        Double.parseDouble(view.getPriceTf().getText()),
-                        Integer.parseInt(view.getCookingTimeTf().getText()),
-                        view.getVeganCb().isSelected(),
-                        selectedMenu
-                );
 
+                    clearFields();
+                    displayAlert("Saved Successfully!", String.format("Details\nName: %s\nPrice: %.2f\nCookingTime: %d Min\nIs Vegan: %b",
+                                    dish.getDishName(), dish.getPrice(), dish.getAverageCookingTimeInMinutes(), dish.isVegan()),
+                            Alert.AlertType.INFORMATION);
+                    dishDAO.addOrUpdate(dish);
+                    initializeListView(); // update list
+                } else {
+                    int idFor = dishDAO.getIdFor(selectedDish);
+                    Dish dish = dishDAO.getById(idFor);
+                    dish.setDishName(view.getDishTa().getText());
+                    dish.setPrice(Double.parseDouble(view.getPriceTf().getText()));
+                    dish.setAverageCookingTimeInMinutes(Integer.parseInt(view.getCookingTimeTf().getText()));
+                    dish.setVegan(view.getVeganCb().isSelected());
 
-                clearFields();
-                displayAlert("Saved Successfully!", String.format("Details\nName: %s\nPrice: %.2f\nCookingTime: %d Min\nIs Vegan: %b",
-                                dish.getDishName(), dish.getPrice(), dish.getAverageCookingTimeInMinutes(), dish.isVegan()),
-                        Alert.AlertType.INFORMATION);
-                dishDAO.addOrUpdate(dish);
-                initializeListView(); // update list
+                    clearFields();
+                    displayAlert("Saved Successfully!", String.format("Details\nName: %s\nPrice: %.2f\nCookingTime: %d Min\nIs Vegan: %b",
+                                    dish.getDishName(), dish.getPrice(), dish.getAverageCookingTimeInMinutes(), dish.isVegan()),
+                            Alert.AlertType.INFORMATION);
+                    initializeListView(); // update list
+                }
 
             } else {
                 displayAlert("Please fix following errors to add dish", errors, Alert.AlertType.ERROR);

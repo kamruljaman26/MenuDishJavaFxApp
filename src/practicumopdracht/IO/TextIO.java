@@ -49,6 +49,5 @@ public class TextIO<T extends Writeable<T>> {
     public void clear(String filename) throws InvalidLineFormatException, IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
         writer.write("");
-        writer.close();
     }
 }

@@ -46,8 +46,21 @@ public abstract class DishDAO implements DAO<Dish> {
         // => the incoming object is not yet present in the objects-List, then the object is added to the objects-List.
         if (!dishes.contains(object)) {
             dishes.add(object);
+        } else {
+            int idFor = getIdFor(object);
+            dishes.get(idFor).setDishName(object.getDishName());
+            dishes.get(idFor).setPrice(object.getPrice());
+            dishes.get(idFor).setAverageCookingTimeInMinutes(object.getAverageCookingTimeInMinutes());
+            dishes.get(idFor).setVegan(object.isVegan());
+            dishes.get(idFor).setBelongsTo(object.getBelongsTo());
         }
     }
+
+    @Override
+    public int getIdFor(Dish dish) {
+        return dishes.indexOf(dish);
+    }
+
 
     @Override
     public void remove(Dish object) {
